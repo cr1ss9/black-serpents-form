@@ -1,0 +1,446 @@
+:root {
+  color-scheme: dark;
+  --bg: #050505;
+  --ink: #fff7e8;
+  --muted: #a89b86;
+  --panel: rgba(14, 13, 12, 0.84);
+  --line: rgba(255, 122, 24, 0.34);
+  --orange: #ff7a18;
+  --gold: #f3c766;
+  --danger: #ff4f4f;
+  --success: #69f0a2;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 122, 24, 0.24), transparent 34rem),
+    linear-gradient(135deg, #060606 0%, #100a05 50%, #030303 100%);
+  color: var(--ink);
+  font-family: "Segoe UI", Arial, sans-serif;
+  letter-spacing: 0;
+}
+
+body::before {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  content: "";
+  background:
+    linear-gradient(rgba(255, 122, 24, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 122, 24, 0.04) 1px, transparent 1px);
+  background-size: 54px 54px;
+  mask-image: linear-gradient(to bottom, black, transparent 85%);
+}
+
+.app-shell,
+.admin-shell {
+  width: min(1120px, calc(100% - 32px));
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 28px 0;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.9fr) minmax(320px, 1.1fr);
+  gap: 24px;
+  align-items: center;
+}
+
+.brand-panel,
+.form-panel,
+.submissions-panel,
+.admin-top {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  box-shadow:
+    0 0 0 1px rgba(243, 199, 102, 0.08) inset,
+    0 0 38px rgba(255, 122, 24, 0.16),
+    0 24px 80px rgba(0, 0, 0, 0.52);
+  backdrop-filter: blur(12px);
+}
+
+.brand-panel {
+  min-height: 680px;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 18px;
+  padding: 38px 30px;
+  text-align: center;
+}
+
+.brand-panel > div {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.brand-panel h1 {
+  max-width: 100%;
+  font-size: clamp(2.35rem, 5vw, 4.45rem);
+  overflow-wrap: anywhere;
+}
+
+.logo {
+  width: min(100%, 430px);
+  filter: drop-shadow(0 0 20px rgba(243, 199, 102, 0.24));
+}
+
+.admin-logo {
+  width: 94px;
+  height: 94px;
+  object-fit: contain;
+}
+
+.kicker {
+  margin: 0 0 8px;
+  color: var(--orange);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+h1,
+h2 {
+  margin: 0;
+  line-height: 0.95;
+  text-transform: uppercase;
+  text-shadow:
+    0 0 18px rgba(255, 122, 24, 0.72),
+    0 0 3px rgba(255, 255, 255, 0.5);
+}
+
+h1 {
+  font-size: clamp(3rem, 8vw, 6.5rem);
+}
+
+h2 {
+  font-size: clamp(1.75rem, 4vw, 3.5rem);
+}
+
+.live-time {
+  max-width: 100%;
+  margin: 18px 0 0;
+  color: var(--gold);
+  font-weight: 700;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.form-panel {
+  padding: 28px;
+}
+
+.panel-heading {
+  margin-bottom: 24px;
+}
+
+form {
+  display: grid;
+  gap: 18px;
+}
+
+label,
+fieldset {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+label span,
+legend {
+  color: var(--gold);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+input {
+  width: 100%;
+  min-height: 52px;
+  border: 1px solid rgba(255, 122, 24, 0.38);
+  border-radius: 6px;
+  outline: none;
+  background: rgba(0, 0, 0, 0.48);
+  color: var(--ink);
+  padding: 0 14px;
+  font: inherit;
+  font-weight: 700;
+  box-shadow: 0 0 22px rgba(255, 122, 24, 0.08) inset;
+}
+
+input:focus {
+  border-color: var(--orange);
+  box-shadow:
+    0 0 0 3px rgba(255, 122, 24, 0.16),
+    0 0 26px rgba(255, 122, 24, 0.16);
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.activity-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.check-tile {
+  position: relative;
+  display: block;
+  min-height: 54px;
+}
+
+.check-tile input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.check-tile span {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 54px;
+  border: 1px solid rgba(255, 122, 24, 0.3);
+  border-radius: 6px;
+  background: rgba(255, 122, 24, 0.07);
+  color: var(--ink);
+  font-size: 0.92rem;
+  transition: 160ms ease;
+}
+
+.check-tile input:checked + span {
+  border-color: var(--gold);
+  background: linear-gradient(135deg, rgba(255, 122, 24, 0.96), rgba(243, 199, 102, 0.82));
+  color: #130a02;
+  box-shadow: 0 0 22px rgba(255, 122, 24, 0.46);
+}
+
+.other-field {
+  display: none;
+}
+
+.other-field.visible {
+  display: grid;
+}
+
+.primary-button,
+.ghost-button {
+  min-height: 52px;
+  border: 1px solid rgba(243, 199, 102, 0.52);
+  border-radius: 6px;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 900;
+  text-decoration: none;
+  transition: 160ms ease;
+}
+
+.primary-button {
+  background: linear-gradient(135deg, #ff7a18, #f3c766);
+  color: #120802;
+  box-shadow: 0 0 28px rgba(255, 122, 24, 0.38);
+}
+
+.primary-button:hover,
+.ghost-button:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.08);
+}
+
+.ghost-button {
+  display: inline-grid;
+  place-items: center;
+  min-width: 98px;
+  padding: 0 14px;
+  background: rgba(0, 0, 0, 0.42);
+  color: var(--ink);
+}
+
+.status {
+  min-height: 24px;
+  margin: 0;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.status[data-type="success"] {
+  color: var(--success);
+}
+
+.status[data-type="error"] {
+  color: var(--danger);
+}
+
+.admin-shell {
+  display: grid;
+  align-content: start;
+  gap: 22px;
+}
+
+.admin-top {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 18px;
+}
+
+.admin-top h1 {
+  font-size: clamp(2.4rem, 7vw, 5.4rem);
+}
+
+.login-panel {
+  width: min(520px, 100%);
+  margin: 0 auto;
+}
+
+.submissions-panel {
+  padding: 22px;
+}
+
+.submissions-header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.admin-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.submissions-list {
+  display: grid;
+  gap: 12px;
+}
+
+.submission-card {
+  border: 1px solid rgba(255, 122, 24, 0.24);
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.34);
+  padding: 16px;
+}
+
+.submission-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+  color: var(--gold);
+}
+
+.submission-meta span {
+  color: var(--muted);
+  text-align: right;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+}
+
+dt {
+  color: var(--orange);
+  font-size: 0.72rem;
+  font-weight: 900;
+}
+
+dd {
+  margin: 4px 0 0;
+  overflow-wrap: anywhere;
+  font-weight: 700;
+}
+
+.empty-state {
+  margin: 0;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 860px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .brand-panel {
+    min-height: auto;
+    padding: 28px 20px;
+  }
+
+  .logo {
+    max-height: 290px;
+    object-fit: contain;
+  }
+
+  .brand-panel h1 {
+    font-size: clamp(2.25rem, 11vw, 3.35rem);
+  }
+
+  .live-time {
+    width: min(100%, 300px);
+    margin-inline: auto;
+    font-size: 0.8rem;
+  }
+
+  .submissions-header,
+  .submission-meta {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .submission-meta span {
+    text-align: left;
+  }
+
+  dl {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .app-shell,
+  .admin-shell {
+    width: min(100% - 20px, 1120px);
+    padding: 10px 0;
+  }
+
+  .form-panel,
+  .submissions-panel {
+    padding: 18px;
+  }
+
+  .activity-grid,
+  dl {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-top {
+    align-items: flex-start;
+  }
+
+  .admin-logo {
+    width: 72px;
+    height: 72px;
+  }
+}

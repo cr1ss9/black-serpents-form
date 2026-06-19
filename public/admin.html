@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="el">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Black Serpents Admin</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <main class="admin-shell">
+      <section class="admin-top">
+        <img class="admin-logo" src="/assets/black-serpents-logo.png" alt="Black Serpents logo">
+        <div>
+          <p class="kicker">Admin</p>
+          <h1>BLACK SERPENTS</h1>
+        </div>
+      </section>
+
+      <section class="form-panel login-panel" id="loginPanel">
+        <div class="panel-heading">
+          <p class="kicker">Protected</p>
+          <h2>ΚΩΔΙΚΟΣ ΠΡΟΣΒΑΣΗΣ</h2>
+        </div>
+        <form id="loginForm">
+          <label>
+            <span>ΚΩΔΙΚΟΣ:</span>
+            <input name="password" type="password" required autofocus>
+          </label>
+          <button class="primary-button" type="submit">ΑΝΟΙΓΜΑ</button>
+          <p class="status" id="loginStatus" role="status"></p>
+        </form>
+      </section>
+
+      <section class="submissions-panel hidden" id="submissionsPanel">
+        <div class="submissions-header">
+          <div>
+            <p class="kicker">Αιτήσεις</p>
+            <h2>ΑΠΑΝΤΗΣΕΙΣ</h2>
+          </div>
+          <div class="admin-actions">
+            <a class="ghost-button" href="/api/submissions.csv">CSV</a>
+            <button class="ghost-button" id="refreshButton" type="button">REFRESH</button>
+            <button class="ghost-button" id="logoutButton" type="button">LOGOUT</button>
+          </div>
+        </div>
+
+        <div class="submissions-list" id="submissionsList"></div>
+      </section>
+    </main>
+
+    <script src="/admin.js"></script>
+  </body>
+</html>
