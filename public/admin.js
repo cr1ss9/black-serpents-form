@@ -5,6 +5,8 @@ const loginStatus = document.querySelector("#loginStatus");
 const submissionsList = document.querySelector("#submissionsList");
 const refreshButton = document.querySelector("#refreshButton");
 const logoutButton = document.querySelector("#logoutButton");
+const staticAdminPassword = "Bserpents";
+const isStaticHost = location.hostname.endsWith("github.io");
 
 function setLoginStatus(message) {
   loginStatus.textContent = message;
@@ -42,7 +44,21 @@ function renderSubmissions(submissions) {
   `).join("");
 }
 
+function renderStaticSubmissions() {
+  const submissions = JSON.parse(localStorage.getItem("bs_submissions") || "[]");
+  loginPanel.classList.add("hidden");
+  submissionsPanel.classList.remove("hidden");
+  renderSubmissions(submissions);
+}
+
 async function loadSubmissions() {
+  if (isStaticHost) {
+    if (sessionStorage.getItem("bs_admin_ok") === "1") {
+      renderStaticSubmissions();
+    }
+    return;
+  }
+
   const response = await fetch("/api/submissions");
   if (response.status === 401) {
     loginPanel.classList.remove("hidden");
@@ -60,6 +76,19 @@ loginForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   setLoginStatus("Έλεγχος...");
   const password = new FormData(loginForm).get("password");
+
+  if (isStaticHost) {
+    if (password !== staticAdminPassword) {
+      setLoginStatus("Λάθος κωδικός.");
+      return;
+    }
+
+    sessionStorage.setItem("bs_admin_ok", "1");
+    loginForm.reset();
+    setLoginStatus("");
+    renderStaticSubmissions();
+    return;
+  }
 
   const response = await fetch("/api/login", {
     method: "POST",
@@ -80,6 +109,13 @@ loginForm.addEventListener("submit", async (event) => {
 refreshButton.addEventListener("click", loadSubmissions);
 
 logoutButton.addEventListener("click", async () => {
+  if (isStaticHost) {
+    sessionStorage.removeItem("bs_admin_ok");
+    loginPanel.classList.remove("hidden");
+    submissionsPanel.classList.add("hidden");
+    return;
+  }
+
   await fetch("/api/logout", { method: "POST" });
   loginPanel.classList.remove("hidden");
   submissionsPanel.classList.add("hidden");
