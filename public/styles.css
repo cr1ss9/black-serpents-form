@@ -338,9 +338,15 @@ fieldset {
 .submission-meta {
   display: flex;
   justify-content: space-between;
+  align-items: start;
   gap: 12px;
   margin-bottom: 14px;
   color: var(--gold);
+}
+
+.submission-meta > div {
+  display: grid;
+  gap: 4px;
 }
 
 .submission-meta span {
@@ -348,9 +354,26 @@ fieldset {
   text-align: right;
 }
 
+.delete-button {
+  min-height: 34px;
+  border: 1px solid rgba(255, 79, 79, 0.55);
+  border-radius: 6px;
+  background: rgba(255, 79, 79, 0.12);
+  color: #ffd5d5;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 900;
+  padding: 0 12px;
+}
+
+.delete-button:hover {
+  background: rgba(255, 79, 79, 0.24);
+}
+
 dl {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 12px;
   margin: 0;
 }

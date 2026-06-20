@@ -31,17 +31,44 @@ function renderSubmissions(submissions) {
   submissionsList.innerHTML = submissions.map((item) => `
     <article class="submission-card">
       <div class="submission-meta">
-        <strong>${escapeHtml(item.name)}</strong>
-        <span>${escapeHtml(item.createdAtText)}</span>
+        <div>
+          <strong>${escapeHtml(item.name)}</strong>
+          <span>${escapeHtml(item.createdAtText)}</span>
+        </div>
+        <button class="delete-button" type="button" data-delete-id="${escapeHtml(item.id)}">DELETE</button>
       </div>
       <dl>
         <div><dt>PATCH</dt><dd>${escapeHtml(item.patch)}</dd></div>
         <div><dt>ΕΦΕΡΑ ΤΟΣΑ</dt><dd>${escapeHtml(item.amount)}</dd></div>
+        <div><dt>ΩΡΕΣ ΣΤΗΝ ΠΟΛΗ</dt><dd>${escapeHtml(item.cityHours || "-")}</dd></div>
         <div><dt>ΕΚΑΝΑ</dt><dd>${escapeHtml((item.activities || []).join(", "))}</dd></div>
         ${item.otherText ? `<div><dt>ΑΛΛΟ</dt><dd>${escapeHtml(item.otherText)}</dd></div>` : ""}
       </dl>
     </article>
   `).join("");
+}
+
+async function deleteSubmission(id) {
+  if (!confirm("Να σβηστεί αυτή η αίτηση;")) return;
+
+  if (isStaticHost) {
+    const submissions = JSON.parse(localStorage.getItem("bs_submissions") || "[]");
+    localStorage.setItem("bs_submissions", JSON.stringify(submissions.filter((item) => item.id !== id)));
+    renderStaticSubmissions();
+    return;
+  }
+
+  const response = await fetch(`/api/submissions/${encodeURIComponent(id)}`, {
+    method: "DELETE"
+  });
+
+  if (!response.ok) {
+    alert("Δεν έγινε διαγραφή. Κάνε ξανά login στο admin.");
+    await loadSubmissions();
+    return;
+  }
+
+  await loadSubmissions();
 }
 
 function renderStaticSubmissions() {
@@ -107,6 +134,12 @@ loginForm.addEventListener("submit", async (event) => {
 });
 
 refreshButton.addEventListener("click", loadSubmissions);
+
+submissionsList.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-delete-id]");
+  if (!button) return;
+  await deleteSubmission(button.dataset.deleteId);
+});
 
 logoutButton.addEventListener("click", async () => {
   if (isStaticHost) {

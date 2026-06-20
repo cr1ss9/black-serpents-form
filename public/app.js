@@ -35,6 +35,7 @@ form.addEventListener("submit", async (event) => {
     name: data.get("name"),
     patch: data.get("patch"),
     amount: data.get("amount"),
+    cityHours: data.get("cityHours"),
     activities: data.getAll("activities"),
     otherText: data.get("otherText")
   };

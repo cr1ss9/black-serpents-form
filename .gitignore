@@ -5,4 +5,5 @@ data/submissions.json
 cookies.txt
 csv-test-output.csv
 tools/
-
+.wrangler/
+.wrangler-dry-run/
